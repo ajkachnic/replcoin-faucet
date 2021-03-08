@@ -25,7 +25,9 @@
   const dispense = document.getElementById('dispense')
 
   dispense.addEventListener('click', async () => {
-    await fetch(`/api/request/${address.nodeValue}`)
+    await fetch(`/api/request/${address.value}`, {
+      method: 'POST'
+    })
   })
 </script>
 </html>

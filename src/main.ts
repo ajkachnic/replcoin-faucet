@@ -10,8 +10,8 @@ const app = new Application()
 const router = new Router()
 
 const waitTime = 4 // Number of hours before you can claim more coins
-const node = 'http://localhost:3001'
-const privateKey = env.PRIVATE_KEY
+const node = 'https://replcoin.andrewk7.repl.co/'
+const privateKey = Deno.env.get('PRIVATE_KEY')
 const dispensedAmount = 50 // Amount dispensed from the faucet
 
 router.get('/', ctx => {
@@ -44,13 +44,20 @@ router.post('/api/request/:address', async ctx => {
       if(res !== undefined) {
         ctx.response.body = res.message
       }
+    } else {
+      // They need to wait
+      ctx.response.body = `Please wait ${nextTime.diff(lastTime, 'hour', true)} hours before requesting again`
+      ctx.response.status = 400
+      return
     }
   } else {
    const res = await transferCoins(address || '')
    if(res !== undefined) {
     ctx.response.body = res.message
+    ctx.response.status = 400
    } 
   }
+  ctx.response.status = 200
 })
 
 const transferCoins = async (address: string) => {
