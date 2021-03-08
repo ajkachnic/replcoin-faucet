@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>replcoin faucet</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+</head>
+<body>
+  <h1>replcoin faucet</h1>
+
+  <p>if you've heard of the world's least secure crypto-currency, replcoin, and want to get your hands on some, then you're in luck. this replcoin faucet will give out replcoin as long as we have some</p>
+
+  <h2>get some coin</h2>
+  <p>you can submit a request every 4 hours</p>
+
+  <label for="address">
+    Address:
+    <input type="text" id="address">
+  </label>
+  <button id="dispense">gimme free stuff</button>
+</body>
+<script>
+  const address = document.getElementById('address')
+  const dispense = document.getElementById('dispense')
+
+  dispense.addEventListener('click', async () => {
+    await fetch(`/api/request/${address.nodeValue}`)
+  })
+</script>
+</html>
